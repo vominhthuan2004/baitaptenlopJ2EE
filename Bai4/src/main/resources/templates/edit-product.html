@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sửa sản phẩm</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background: #f5f7fa;
+        }
+        .form-card {
+            max-width: 650px;
+            margin: auto;
+            border-radius: 12px;
+        }
+        .form-title {
+            font-weight: 600;
+            color: #d39e00; /* màu warning */
+        }
+        .current-img {
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+
+<body class="container py-5">
+
+<h2 class="text-center mb-4 form-title">✏️ Sửa sản phẩm</h2>
+
+<div class="card p-4 shadow form-card">
+
+    <form th:action="@{/products/edit}"
+          th:object="${product}"
+          method="post"
+          enctype="multipart/form-data">
+
+        <!-- ID (hidden) -->
+        <input type="hidden" th:field="*{id}">
+
+        <!-- Tên -->
+        <div class="mb-3">
+            <label class="form-label fw-bold">Tên sản phẩm</label>
+            <input type="text" th:field="*{name}" class="form-control" placeholder="Nhập tên sản phẩm">
+            <small class="text-danger" th:errors="*{name}"></small>
+        </div>
+
+        <!-- Giá -->
+        <div class="mb-3">
+            <label class="form-label fw-bold">Giá</label>
+            <input type="number" th:field="*{price}" class="form-control" placeholder="Nhập giá...">
+            <small class="text-danger" th:errors="*{price}"></small>
+        </div>
+
+        <!-- Danh mục -->
+        <div class="mb-3">
+            <label class="form-label fw-bold">Danh mục</label>
+            <select th:field="*{category}" class="form-select">
+                <option value="">-- Chọn danh mục --</option>
+                <option value="Điện thoại">Điện thoại</option>
+                <option value="Laptop">Laptop</option>
+            </select>
+            <small class="text-danger" th:errors="*{category}"></small>
+        </div>
+
+        <!-- Hình hiện tại -->
+        <div class="mb-3" th:if="${product.image != null}">
+            <label class="form-label fw-bold">Hình hiện tại</label><br>
+            <img th:src="@{'/uploads/' + ${product.image}}" width="150" class="current-img shadow-sm">
+        </div>
+
+        <!-- Upload hình mới -->
+        <div class="mb-3">
+            <label class="form-label fw-bold">Đổi hình (nếu có)</label>
+            <input type="file" name="file" class="form-control">
+        </div>
+
+        <!-- Nút -->
+        <div class="d-flex justify-content-between mt-4">
+            <a th:href="@{/products}" class="btn btn-outline-secondary px-4">← Quay lại</a>
+            <button type="submit" class="btn btn-warning px-4">Cập nhật</button>
+        </div>
+
+    </form>
+</div>
+
+</body>
+</html>

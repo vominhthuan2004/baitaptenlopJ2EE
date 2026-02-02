@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thêm sản phẩm</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background: #f5f7fa;
+        }
+        .form-card {
+            max-width: 600px;
+            margin: auto;
+            border-radius: 12px;
+        }
+        .form-title {
+            font-weight: 600;
+            color: #0d6efd;
+        }
+    </style>
+</head>
+
+<body class="container py-5">
+
+<h2 class="text-center mb-4 form-title">➕ Thêm sản phẩm mới</h2>
+
+<div class="card p-4 shadow form-card">
+
+    <form th:action="@{/products/add}"
+          th:object="${product}"
+          method="post"
+          enctype="multipart/form-data">
+
+        <!-- Tên -->
+        <div class="mb-3">
+            <label class="form-label fw-bold">Tên sản phẩm</label>
+            <input type="text" th:field="*{name}" class="form-control" placeholder="Ví dụ: iPhone 15">
+            <small class="text-danger" th:errors="*{name}"></small>
+        </div>
+
+        <!-- Giá -->
+        <div class="mb-3">
+            <label class="form-label fw-bold">Giá</label>
+            <input type="number" th:field="*{price}" class="form-control" placeholder="Nhập giá...">
+            <small class="text-danger" th:errors="*{price}"></small>
+        </div>
+
+        <!-- Danh mục -->
+        <div class="mb-3">
+            <label class="form-label fw-bold">Danh mục</label>
+            <select th:field="*{category}" class="form-select">
+                <option value="">-- Chọn danh mục --</option>
+                <option value="Điện thoại">Điện thoại</option>
+                <option value="Laptop">Laptop</option>
+            </select>
+            <small class="text-danger" th:errors="*{category}"></small>
+        </div>
+
+        <!-- Hình ảnh -->
+        <div class="mb-3">
+            <label class="form-label fw-bold">Hình ảnh</label>
+            <input type="file" name="file" class="form-control">
+            <small class="text-danger" th:errors="*{image}"></small>
+        </div>
+
+        <!-- Nút -->
+        <div class="d-flex justify-content-between mt-4">
+            <a th:href="@{/products}" class="btn btn-outline-secondary px-4">← Quay lại</a>
+            <button type="submit" class="btn btn-primary px-4">Lưu sản phẩm</button>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>
